@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>डेमो मतदान यंत्र</title>
+    <style>
+        /* Common styles */
+        .button-base {
+            text-align: center;
+            height: 65px;
+            width: 20%;
+            line-height: 65px;
+            cursor: pointer;
+            font-size: 22px;
+            text-transform: uppercase;
+            color: #F0F0F0;
+            border-radius: 30px;
+            border-bottom: 4px solid #4D43B2;
+            box-shadow: 6px 6px 6px #999;
+            user-select: none;
+            background: #393186;
+            transition: all .05s linear;
+            margin: 10px 0;
+        }
+
+        .button-base:active {
+            box-shadow: 2px 2px 2px #777;
+            border-bottom: 1px solid #FFB909;
+            transform: translateY(3px);
+        }
+
+        /* Table styles */
+        .voting-table {
+            margin: 0 auto;
+            width: 98%;
+            text-align: center;
+            border-collapse: collapse;
+            font-family: Akshar, sans-serif;
+            font-size: 4vw;
+        }
+
+        .voting-table td {
+            border: 2px solid #000000;
+            padding: 10px;
+        }
+
+        .highlight-row {
+            background-color: #ffe95e;
+        }
+
+        .highlight-text {
+            color: #333333;
+            font-weight: bold;
+        }
+
+        /* Responsive image sizes */
+        .bulb-image {
+            width: 6vw;
+        }
+
+        .symbol-image {
+            width: 10vw;
+            height: 10vw;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Akshar:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Header Section -->
+<div style="text-align:center; font-family: Akshar, sans-serif; font-size:4vw; margin-top:30px">
+    85 -भोकर विधानसभा सार्वजनिक निवडणूक २०२४ <br>
+    डमी मतदान यंत्र
+</div>
+
+<!-- Instructions Section -->
+<div class="button-base buttonIntro" style="width:80% !important; margin:20px auto; font-family: Akshar, sans-serif; font-size:3vw">
+    डेमो मतदानासाठी पंजा निशाणी समोरील निळे बटण दाबावे
+</div>
+
+<!-- Voting Table -->
+<table class="voting-table">
+    <!-- Table headers -->
+    <tr>
+        <td>S.No.</td>
+        <td>Name of Candidate</td>
+        <td>Election <br> Symbol</td>
+        <td>Bulb</td>
+        <td>Button</td>
+    </tr>
+    <!-- Dynamic rows will be inserted here -->
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Audio elements
+        const audioElements = {
+            error: new Audio('error.mp3'),
+            correct: new Audio('correct.mp3'),
+            last: new Audio('audio.mp3')
+        };
+
+        // Generate voting rows
+        const totalRows = 16;
+        const votingTable = $('.voting-table');
+
+        for(let i = 1; i <= totalRows; i++) {
+            const isHighlightRow = i === 1;
+            const row = $('<tr>').addClass(isHighlightRow ? 'highlight-row' : '');
+
+            // Add row content
+            row.append(`
+                    <td>${i}</td>
+                    <td class="${isHighlightRow ? 'highlight-text' : ''}">${isHighlightRow ? 'कदम कोंढेकर तिरुपती उर्फ पप्पु बाबुराव' : ''}</td>
+                    <td>${isHighlightRow ? '<img src="logo.png" class="symbol-image">' : ''}</td>
+                    <td><img id="errorimage${i}" src="bulb.png" class="bulb-image"></td>
+                    <td><div id="errorbtn${i}" class="${isHighlightRow ? 'buttonCorrect' : 'button'} button-base" style="width:100% !important">${isHighlightRow ? 'बटण दाबा' : ''}</div></td>
+                `);
+
+            votingTable.append(row);
+        }
+
+        // Event handlers
+        function playAudio(type) {
+            audioElements[type].load();
+            audioElements[type].play();
+        }
+
+        function handleButtonClick(buttonId) {
+            const imageId = `errorimage${buttonId}`;
+            const image = document.getElementById(imageId);
+            image.src = "bulbred.png";
+
+            setTimeout(() => {
+                image.src = "bulb.png";
+            }, 2000);
+        }
+
+        // Bind events
+        $('.button').on('mousedown mouseup', () => playAudio('error'));
+
+        $('.buttonCorrect').on('mousedown mouseup', () => {
+            playAudio('correct');
+            setTimeout(() => playAudio('last'), 1000);
+        });
+
+        // Bind click events for all buttons
+        for(let i = 1; i <= totalRows; i++) {
+            $(`#errorbtn${i}`).click(() => handleButtonClick(i));
+        }
+    });
+</script>
+</body>
+</html>
