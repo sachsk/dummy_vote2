@@ -45,7 +45,8 @@
         }
 
         .highlight-row {
-            background-color: #ffe95e;
+            background-color: #FF6634;
+            color: white;
         }
 
         .highlight-text {
@@ -63,18 +64,18 @@
             height: 10vw;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Akshar:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi:ital@0;1&display=swap" rel="stylesheet">
 </head>
 <body>
 <!-- Header Section -->
 <div style="text-align:center; font-family: Akshar, sans-serif; font-size:4vw; margin-top:30px">
-    85 -भोकर विधानसभा सार्वजनिक निवडणूक २०२४ <br>
+    85 - नांदेड उत्तर विधानसभा सार्वजनिक निवडणूक २०२४ <br>
     डमी मतदान यंत्र
 </div>
 
 <!-- Instructions Section -->
 <div class="button-base buttonIntro" style="width:80% !important; margin:20px auto; font-family: Akshar, sans-serif; font-size:3vw">
-    डेमो मतदानासाठी पंजा निशाणी समोरील निळे बटण दाबावे
+    डेमो मतदानासाठी मशाल निशाणी समोरील निळे बटण दाबावे
 </div>
 
 <!-- Voting Table -->
@@ -105,14 +106,14 @@
         const votingTable = $('.voting-table');
 
         for(let i = 1; i <= totalRows; i++) {
-            const isHighlightRow = i === 1;
+            const isHighlightRow = i === 5;
             const row = $('<tr>').addClass(isHighlightRow ? 'highlight-row' : '');
 
             // Add row content
             row.append(`
                     <td>${i}</td>
-                    <td class="${isHighlightRow ? 'highlight-text' : ''}">${isHighlightRow ? 'कदम कोंढेकर तिरुपती उर्फ पप्पु बाबुराव' : ''}</td>
-                    <td>${isHighlightRow ? '<img src="logo.png" class="symbol-image">' : ''}</td>
+                    <td class="${isHighlightRow ? 'highlight-text' : ''}" style="color: white">${isHighlightRow ? 'सौ. संगीता विठ्ठल पाटील' : ''}</td>
+                    <td>${isHighlightRow ? '<img src="logo6.png" class="symbol-image">' : ''}</td>
                     <td><img id="errorimage${i}" src="bulb.png" class="bulb-image"></td>
                     <td><div id="errorbtn${i}" class="${isHighlightRow ? 'buttonCorrect' : 'button'} button-base" style="width:100% !important">${isHighlightRow ? 'बटण दाबा' : ''}</div></td>
                 `);
